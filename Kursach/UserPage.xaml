@@ -1,0 +1,64 @@
+﻿<Window x:Class="Kursach.UserPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:Kursach.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" WindowState="Maximized" WindowStyle="SingleBorderWindow">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"></Setter>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="Height" Value="80"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <uc:Header>
+            <Button Margin="10" HorizontalAlignment="Right">Выйти</Button>
+        </uc:Header>
+        <TabControl Grid.Row="1">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Ellipse Height="10" Width="10" Fill="Black" />
+                        <TextBlock Margin="3">Курсы</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock TextAlignment="Center" FontSize="45">Добавленные курсы:</TextBlock>
+                        <Border Grid.Row="1" CornerRadius="10" BorderThickness="5" Margin="10" BorderBrush="Black">
+                            <ScrollViewer>
+                                <WrapPanel x:Name="courses" />
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Задания</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <UniformGrid Columns="2"  Name="missions">
+                        
+                    </UniformGrid>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
