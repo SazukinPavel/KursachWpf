@@ -1,27 +1,39 @@
 ﻿using Kursach.Services;
 using Kursach.Types;
-using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для StartWindow.xaml
+    /// Логика взаимодействия для StartPage.xaml
     /// </summary>
-    public partial class StartWindow : Window
+    public partial class StartPage : Page
     {
         AuthService authService;
-        public StartWindow()
+        public StartPage()
         {
+            ShowsNavigationUI = false;
             InitializeComponent();
             authService = new AuthService();
         }
 
-        protected override void OnContentRendered(EventArgs e)
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            base.OnContentRendered(e);
+            base.OnRender(drawingContext);
             Authorize();
         }
 
@@ -37,26 +49,21 @@ namespace Kursach
                     (Application.Current as App).User = user;
                     if (user.role == RoleType.GetUser())
                     {
-                        UserPage userPage = new UserPage();
-                        userPage.Show();
+                        this.NavigationService.Navigate(new UserPage());
                     }
                     else
                     {
-                        AuthorPage authorPage = new AuthorPage();
-                        authorPage.Show();
+                        this.NavigationService.Navigate(new AuthorPage());
                     }
-                    this.Close();
                     return;
                 }
                 AuthService.ResetToken();
-                Login login = new Login();
-                login.Show();
-                this.Close();
+                this.NavigationService.Navigate(new LoginPage());
             }
             catch (HttpRequestException)
             {
                 message.Text = "Нет подключения к серверу(";
-                refresh.Visibility=Visibility.Visible;
+                refresh.Visibility = Visibility.Visible;
             }
         }
 
@@ -64,11 +71,5 @@ namespace Kursach
         {
             Authorize();
         }
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            authService.Dispose();
-        }
-
     }
 }

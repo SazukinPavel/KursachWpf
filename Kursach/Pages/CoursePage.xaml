@@ -1,11 +1,12 @@
-﻿<Window x:Class="Kursach.CoursePage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="CoursePage" WindowState="Maximized" WindowStyle="None">
-    <Window.Resources>
+﻿<Page x:Class="Kursach.Pages.CoursePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Kursach.Pages"
+      mc:Ignorable="d" 
+      Title="CoursePage">
+    <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="FontSize" Value="35"></Setter>
@@ -15,7 +16,7 @@
             <Setter Property="FontSize" Value="30"></Setter>
             <Setter Property="Height" Value="70"></Setter>
         </Style>
-    </Window.Resources>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -48,4 +49,4 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-</Window>
+</Page>

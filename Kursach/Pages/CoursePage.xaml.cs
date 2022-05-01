@@ -12,40 +12,43 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
     /// Логика взаимодействия для CoursePage.xaml
     /// </summary>
-    public partial class CoursePage : Window
+    public partial class CoursePage : Page
     {
         public delegate void BackClick();
         public event BackClick onBackClick;
         SubscriptionService subscriptionService;
         Course Course { get; set; }
+        Page goBack;
 
         bool isSubscribe;
 
-        public CoursePage(Course course,BackClick backClick)
+        public CoursePage(Course course,Page goBack)
         {
-            this.Course = course;
-            subscriptionService = new SubscriptionService();
+            ShowsNavigationUI = false;
             InitializeComponent();
-            onBackClick += backClick;
+            this.Course = course;
+            this.goBack=goBack;
+            subscriptionService = new SubscriptionService();
         }
 
-        protected async override void OnInitialized(EventArgs e)
+        protected async override void OnRender(DrawingContext drawingContext)
         {
-            base.OnInitialized(e);
+            base.OnRender(drawingContext);
             isSubscribe = (await subscriptionService.CheckIsSubscribe(Course.id)).Data;
             RenderCourse();
         }
 
         public void RenderCourse()
         {
-            name.Text=Course.name;
+            name.Text = Course.name;
             description.Text = Course.description;
             authors.ItemsSource = Course.authors;
             RenderSubscribeButton();
@@ -56,16 +59,9 @@ namespace Kursach
             switchSubscribe.Content = isSubscribe ? "Отписаться" : "Подписаться";
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            subscriptionService.Dispose();
-        }
-
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-            onBackClick();               
-            this.Close();
+            this.NavigationService.Navigate(goBack);
         }
 
         private async void switchSubscribe_Click(object sender, RoutedEventArgs e)
@@ -84,14 +80,8 @@ namespace Kursach
 
         private void authors_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            AuthorInfoPage authorInfoPage = new AuthorInfoPage(() =>
-            {
-                CoursePage coursePage = new CoursePage(Course, this.onBackClick);
-                coursePage.Show();
-                Close();
-            },Course.authors[authors.SelectedIndex].id);
-            Close();
-            authorInfoPage.Show();
+            AuthorInfoPage authorInfoPage = new AuthorInfoPage(this, Course.authors[authors.SelectedIndex].id);
+            this.NavigationService.Navigate(authorInfoPage);
         }
     }
 }

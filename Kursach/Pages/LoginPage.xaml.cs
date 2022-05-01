@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,19 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
     /// Логика взаимодействия для Login.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class LoginPage : Page
     {
         string validEmailPattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
         AuthService authService;
-        public Login()
+        public LoginPage()
         {
+            ShowsNavigationUI = false;
             InitializeComponent();
             authService = new AuthService();
         }
@@ -36,16 +37,14 @@ namespace Kursach
             string userPassw = password.GetPassword();
             if (!string.IsNullOrEmpty(usernameOrEmail) && !string.IsNullOrEmpty(userPassw))
             {
-                var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail,password=userPassw});
+                var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail, password = userPassw });
                 if (res.IsError)
                 {
                     MessageBox.Show($"Произошла ошибка:{res.HttpError.message}");
                     return;
                 }
                 authService.SetAuthorize(res.Data);
-                StartWindow startWindow = new StartWindow();
-                startWindow.Show();
-                Close();
+                this.NavigationService.Navigate(new StartPage());
                 return;
             }
             MessageBox.Show("Все поля должны быть заполнены");
@@ -53,15 +52,8 @@ namespace Kursach
 
         private void onRegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            Register register = new Register();
-            register.Show();
-            this.Close();
+            this.NavigationService.Navigate(new RegisterPage());
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            authService.Dispose();
-        }
     }
 }

@@ -4,21 +4,32 @@ using Kursach.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
     /// Логика взаимодействия для AllCoursesPage.xaml
     /// </summary>
-    public partial class AllCoursesPage : Window
+    public partial class AllCoursesPage : Page
     {
+
         List<Course> Courses;
         CoursesService CoursesService;
-        
+
         public AllCoursesPage()
         {
+            ShowsNavigationUI = false;
             InitializeComponent();
             Courses = new List<Course>();
             CoursesService = new CoursesService();
@@ -29,9 +40,13 @@ namespace Kursach
             Courses = (await CoursesService.GetCourses()).Data.ToList();
         }
 
-        protected override void OnContentRendered(EventArgs e)
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            RenderCoursePanel();
+            base.OnRender(drawingContext);
+            if (Courses == null)
+            {
+                RenderCoursePanel();
+            }
         }
 
         async void RenderCoursePanel()
@@ -45,26 +60,12 @@ namespace Kursach
 
         public void GoToCoursePage(Course course)
         {
-            CoursePage coursePage = new CoursePage(course, () =>
-            {
-                AllCoursesPage allCoursesPage = new AllCoursesPage();
-                allCoursesPage.Show();
-            });
-            Close();
-            coursePage.Show();
+            this.NavigationService.Navigate(new CoursePage(course,this));
         }
 
-        protected override void OnClosed(EventArgs e)
+        private void GoBackClick(object sender, RoutedEventArgs e)
         {
-            base.OnClosed(e);
-            CoursesService.Dispose();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            UserPage userPage = new UserPage();
-            this.Close();
-            userPage.Show();
+            this.NavigationService.Navigate(new UserPage());
         }
     }
 }

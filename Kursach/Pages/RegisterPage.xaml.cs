@@ -2,21 +2,33 @@
 using Kursach.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Register.xaml
+    /// Логика взаимодействия для RegisterPage.xaml
     /// </summary>
-    public partial class Register : Window
+    public partial class RegisterPage : Page
     {
         string validEmailPattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
 
         AuthService authService;
-        public Register()
+        public RegisterPage()
         {
+            ShowsNavigationUI = false;
             InitializeComponent();
             authService = new AuthService();
             role.ItemsSource = new List<string> { "Пользователь", "Автор" };
@@ -50,9 +62,7 @@ namespace Kursach
                     return;
                 }
                 authService.SetAuthorize(res.Data);
-                StartWindow startWindow = new StartWindow();
-                startWindow.Show();
-                Close();
+                this.NavigationService.Navigate(new StartPage());
                 return;
             }
             MessageBox.Show("Все поля должны быть заполнены");
@@ -60,15 +70,8 @@ namespace Kursach
 
         private void toLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            Login login = new Login();
-            login.Show();
-            this.Close();
+            this.NavigationService.Navigate(new LoginPage());
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            authService.Dispose();
-        }
     }
 }

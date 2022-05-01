@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для AuthorPage.xaml
+    /// Логика взаимодействия для Main.xaml
     /// </summary>
-    public partial class AuthorPage : Window
+    public partial class Main : Window
     {
-        public AuthorPage()
+        public Main()
         {
+            this.frame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             InitializeComponent();
         }
     }

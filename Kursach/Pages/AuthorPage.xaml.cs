@@ -1,5 +1,4 @@
 ﻿using Kursach.Controls;
-using Kursach.http;
 using Kursach.Models;
 using Kursach.Services;
 using System;
@@ -17,30 +16,36 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kursach
+namespace Kursach.Pages
 {
     /// <summary>
-    /// Interaction logic for UserPage.xaml
+    /// Логика взаимодействия для AuthorPage.xaml
     /// </summary>
-    public partial class UserPage : Window
+    public partial class AuthorPage : Page
     {
-
         private List<Course> CoursesList { get; set; }
-        SubscriptionService subscriptionService;
-        public UserPage()
+        OwnCoursesService ownCoursesService;
+        public AuthorPage()
         {
+            ShowsNavigationUI = false;
             InitializeComponent();
-            subscriptionService = new SubscriptionService();
+            name.Text = (App.Current as App).User.name;
+            ownCoursesService = new OwnCoursesService();
         }
 
         async System.Threading.Tasks.Task FetchCourses()
         {
-            CoursesList = (await subscriptionService.GetCourses())?.Data?.ToList();
+            CoursesList = (await ownCoursesService.GetCourses())?.Data?.ToList();
         }
 
-        protected override void OnContentRendered(EventArgs e)
+
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            RenderCoursePanel();
+            base.OnRender(drawingContext);
+            if (CoursesList == null)
+            {
+                RenderCoursePanel();
+            }
         }
 
         async void RenderCoursePanel()
@@ -48,27 +53,19 @@ namespace Kursach
             await FetchCourses();
             foreach (var course in CoursesList)
             {
-                courses.Children.Add(new CourseCard(course,GoToCoursePage));                
+                courses.Children.Add(new CourseCard(course, GoToCoursePage));
             }
             courses.Children.Add(new PlusCard(GoToAllCourses));
         }
 
         public void GoToCoursePage(Course course)
         {
-            CoursePage coursePage = new CoursePage(course, () =>
-            {
-                UserPage userPage = new UserPage();
-                userPage.Show();
-            });
-            this.Close();
-            coursePage.Show();
+            this.NavigationService.Navigate(new CoursePage(course, new UserPage()));
         }
 
         void GoToAllCourses()
         {
-            AllCoursesPage allCoursesPage = new AllCoursesPage();
-            this.Close();
-            allCoursesPage.Show();
+            this.NavigationService.Navigate(new AllCoursesPage());
         }
 
         //void RenderMissionPanel(List<Mission> MissionList)
@@ -79,18 +76,10 @@ namespace Kursach
         //    //}
         //}
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            subscriptionService.Dispose();
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AuthService.ResetToken();
-            StartWindow startWindow = new StartWindow();
-            this.Close();
-            startWindow.Show();
+            this.NavigationService.Navigate(new StartPage());
         }
     }
 }
