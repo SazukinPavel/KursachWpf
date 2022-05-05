@@ -42,11 +42,17 @@ namespace Kursach.Services
                 var user = CheckToken();
                 return (await user).Data;
             }
+            await checkConnection();
             return null;
         }
         private void SaveToken(string token)
         {
             Registry.CurrentUser.CreateSubKey("courses").SetValue("token", token);
+        }
+
+        private async Task<HttpData<bool>> checkConnection()
+        {
+            return await myHttpClient.Get<bool>("connection");
         }
 
         public static void ResetToken()

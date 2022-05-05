@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <TextBlock HorizontalAlignment="Left" x:Name="name"></TextBlock>
-            <Button Margin="10" HorizontalAlignment="Right" Click="Button_Click">Выйти</Button>
+            <Button Margin="10" HorizontalAlignment="Right" Click="exitButton_Click">Выйти</Button>
         </Grid>
         <TabControl Grid.Row="1">
             <TabItem>
@@ -55,9 +55,12 @@
                     </Grid>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <UniformGrid Columns="2"  Name="missions">
-
-                    </UniformGrid>
+                    <Grid>
+                        <ScrollViewer>
+                            <UniformGrid Columns="2"  Name="tasks">
+                            </UniformGrid>
+                        </ScrollViewer>
+                    </Grid>
                 </TabItem.Content>
             </TabItem>
         </TabControl>

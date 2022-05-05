@@ -21,7 +21,6 @@ namespace Kursach.Pages
     {
         public Main()
         {
-            this.frame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             InitializeComponent();
         }
     }

@@ -22,12 +22,10 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border BorderThickness="4" BorderBrush="Black">
             <Grid>
                 <TextBlock FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
                 <Button HorizontalAlignment="Right" Margin="10" Name="backButton" Click="backButton_Click">Назад</Button>
             </Grid>
-        </Border>
         <ScrollViewer Margin="10" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>

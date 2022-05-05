@@ -22,15 +22,15 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid>
-            <TextBlock HorizontalAlignment="Left" x:Name="name"></TextBlock>
-            <Button Margin="10" HorizontalAlignment="Right" Click="Button_Click">Выйти</Button>
+            <TextBlock FontSize="40" HorizontalAlignment="Left" x:Name="name"></TextBlock>
+            <Button Margin="10" HorizontalAlignment="Right" Click="exitButton_Click">Выйти</Button>
         </Grid>
         <TabControl Grid.Row="1">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Ellipse Height="10" Width="10" Fill="Black" />
-                        <TextBlock Margin="3">Курсы</TextBlock>
+                        <TextBlock Margin="3">Ваши курсы</TextBlock>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid>
@@ -51,14 +51,37 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Ваши задачи</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ScrollViewer>
+                            <UniformGrid Columns="2"  Name="tasks">
+                            </UniformGrid>
+                        </ScrollViewer>
+                        <Grid Grid.Row="1">
+                            <Button Margin="20 0 20 0" HorizontalAlignment="Right" Name="addTaskButton" Click="addTaskButton_Click">Добавить</Button>
+                        </Grid>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
                             <TextBlock Margin="3">Полученые ответы</TextBlock>
                         </StackPanel>
                     </Grid>
                 </TabItem.Header>
                 <TabItem.Content>
-                    <UniformGrid Columns="2"  Name="missions">
-
-                    </UniformGrid>
+                    <StackPanel></StackPanel>
                 </TabItem.Content>
             </TabItem>
         </TabControl>

@@ -1,5 +1,7 @@
 ﻿using Kursach.dto;
+using Kursach.ModalWindows;
 using Kursach.Services;
+using Kursach.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,14 +42,14 @@ namespace Kursach.Pages
                 var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail, password = userPassw });
                 if (res.IsError)
                 {
-                    MessageBox.Show($"Произошла ошибка:{res.HttpError.message}");
+                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", res.HttpError.message)).Show();
                     return;
                 }
                 authService.SetAuthorize(res.Data);
                 this.NavigationService.Navigate(new StartPage());
                 return;
             }
-            MessageBox.Show("Все поля должны быть заполнены");
+            ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Все поля должны быть заполнены")).Show();
         }
 
         private void onRegisterButton_Click(object sender, RoutedEventArgs e)

@@ -3,9 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Kursach.Pages"
         xmlns:uc="clr-namespace:Kursach.Controls"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" Width="800"
       Title="Login">
     <Page.Resources>
         <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
@@ -24,27 +23,27 @@
             <Setter Property="FontSize" Value="35"></Setter>
             <Setter Property="Padding" Value="50 20 50 20"></Setter>
             <Setter Property="Margin" Value="10"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Height" Value="80"></Setter>
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"  Orientation="Vertical">
+        <StackPanel  Width="600" VerticalAlignment="Center" HorizontalAlignment="Center"  Orientation="Vertical">
             <TextBlock TextAlignment="Center" Foreground="Black" FontWeight="Bold" FontSize="40">Вход</TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock>Имя или email:</TextBlock>
-                <TextBox Grid.Column="1" x:Name="nameOrEmail"></TextBox>
+                <TextBlock Margin="0 0 30 0">Имя или email:</TextBlock>
+                <TextBox  MaxLength="30" Grid.Column="1" x:Name="nameOrEmail"></TextBox>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock>Пароль:</TextBlock>
+                <TextBlock Margin="0 0 30 0">Пароль:</TextBlock>
                 <uc:PasswordBox x:Name="password" Grid.Column="1"/>
             </Grid>
             <Grid>

@@ -10,6 +10,10 @@
         <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
             <Setter Property="FontSize" Value="35"></Setter>
         </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+            <Setter Property="FontSize" Value="35"></Setter>
+            <Setter Property="Height" Value="80"></Setter>
+        </Style>
     </Page.Resources>
     <Grid>
         <Border Padding="30" CornerRadius="30" BorderBrush="Black" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -18,7 +22,7 @@
                     <RowDefinition Height="*" ></RowDefinition>
                     <RowDefinition Height="0.25*" ></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"  Name="message">
+                <TextBlock FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"  Name="message">
                     Подождите...
                     <LineBreak></LineBreak>
                     Идёт проверка авторизации.

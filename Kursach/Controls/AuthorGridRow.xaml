@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Kursach.Controls.AuthorGridRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Kursach.Controls"
+             mc:Ignorable="d">
+    <Grid Margin="0 10 0 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="author"></TextBlock>
+        <Button Grid.Column="1" Name="deleteButton" Click="deleteButton_Click">Удалить</Button>
+    </Grid>
+</UserControl>

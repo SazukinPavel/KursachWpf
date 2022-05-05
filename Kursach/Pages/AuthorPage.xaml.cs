@@ -1,20 +1,13 @@
 ﻿using Kursach.Controls;
+using Kursach.ModalWindows;
 using Kursach.Models;
 using Kursach.Services;
-using System;
+using Kursach.Types;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Kursach.Pages
 {
@@ -24,62 +17,79 @@ namespace Kursach.Pages
     public partial class AuthorPage : Page
     {
         private List<Course> CoursesList { get; set; }
-        OwnCoursesService ownCoursesService;
+        private List<Models.Task> TasksList { get; set; }
+        OwnCourseService ownCoursesService;
+        TaskService taskService;
         public AuthorPage()
         {
             ShowsNavigationUI = false;
             InitializeComponent();
             name.Text = (App.Current as App).User.name;
-            ownCoursesService = new OwnCoursesService();
+            ownCoursesService = new OwnCourseService();
+            taskService = new TaskService();
         }
-
         async System.Threading.Tasks.Task FetchCourses()
         {
             CoursesList = (await ownCoursesService.GetCourses())?.Data?.ToList();
         }
-
-
+        async System.Threading.Tasks.Task FetchTasks()
+        {
+            TasksList = (await taskService.GetUserTasks())?.Data?.ToList();
+        }
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            if (CoursesList == null)
+            if (CoursesList == null && TasksList == null)
             {
                 RenderCoursePanel();
+                RenderTaskPanel();
+            }
+        }
+        async void RenderTaskPanel()
+        {
+            await FetchTasks();
+            tasks.Children.Clear();
+            foreach (var task in TasksList)
+            {
+                tasks.Children.Add(new TaskCard(new TaskCardProps { Task=task,buttonClick=EditCourse,ButtonMessage="Изменить"}));
             }
         }
 
         async void RenderCoursePanel()
         {
             await FetchCourses();
+            tasks.Children.Clear();
             foreach (var course in CoursesList)
             {
                 courses.Children.Add(new CourseCard(course, GoToCoursePage));
             }
-            courses.Children.Add(new PlusCard(GoToAllCourses));
+            courses.Children.Add(new PlusCard(GoToAddCourse));
         }
 
-        public void GoToCoursePage(Course course)
+        void GoToCoursePage(Course course)
         {
-            this.NavigationService.Navigate(new CoursePage(course, new UserPage()));
+            this.NavigationService.Navigate(new AuthorCoursePage(course));
         }
 
-        void GoToAllCourses()
+        void EditCourse(Task task)
         {
-            this.NavigationService.Navigate(new AllCoursesPage());
+            ModalWindowFactory.CreateEditTaskWindow(task).ShowDialog();
+            RenderTaskPanel();
         }
 
-        //void RenderMissionPanel(List<Mission> MissionList)
-        //{
-        //    //foreach (var mission in MissionList)
-        //    //{
-        //    //    missions.Children.Add(new MissionCard(mission));
-        //    //}
-        //}
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void GoToAddCourse()
+        {
+            this.NavigationService.Navigate(new AddCoursePage());
+        }
+        void exitButton_Click(object sender, RoutedEventArgs e)
         {
             AuthService.ResetToken();
             this.NavigationService.Navigate(new StartPage());
+        }
+
+        void addTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new AddTaskPage(CoursesList));
         }
     }
 }

@@ -1,20 +1,12 @@
 ﻿using Kursach.Controls;
 using Kursach.Models;
 using Kursach.Services;
-using System;
+using Kursach.Types;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Kursach.Pages
 {
@@ -25,13 +17,16 @@ namespace Kursach.Pages
     {
 
         private List<Course> CoursesList { get; set; }
+        private List<Task> TasksList { get; set; }
         SubscriptionService subscriptionService;
+        TaskService taskService;
         public UserPage()
         {
             ShowsNavigationUI = false;
             InitializeComponent();
             name.Text = (App.Current as App).User.name;
             subscriptionService = new SubscriptionService();
+            taskService = new TaskService();
         }
 
         async System.Threading.Tasks.Task FetchCourses()
@@ -41,11 +36,12 @@ namespace Kursach.Pages
 
 
         protected override void OnRender(DrawingContext drawingContext)
-        { 
+        {
             base.OnRender(drawingContext);
-            if(CoursesList == null)
+            if (CoursesList == null && TasksList==null)
             {
                 RenderCoursePanel();
+                RenderTaskPanel();
             }
         }
 
@@ -69,15 +65,21 @@ namespace Kursach.Pages
             this.NavigationService.Navigate(new AllCoursesPage());
         }
 
-        //void RenderMissionPanel(List<Mission> MissionList)
-        //{
-        //    //foreach (var mission in MissionList)
-        //    //{
-        //    //    missions.Children.Add(new MissionCard(mission));
-        //    //}
-        //}
+        async void RenderTaskPanel()
+        {
+            await FetchTasks();
+            tasks.Children.Clear();
+            foreach (var task in TasksList)
+            {
+                tasks.Children.Add(new TaskCard(new TaskCardProps { Task = task, buttonClick = (t) => { }, ButtonMessage = "Изменить" }));
+            }
+        }
+        async System.Threading.Tasks.Task FetchTasks()
+        {
+            TasksList = (await taskService.GetUserTasks())?.Data?.ToList();
+        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void exitButton_Click(object sender, RoutedEventArgs e)
         {
             AuthService.ResetToken();
             this.NavigationService.Navigate(new StartPage());

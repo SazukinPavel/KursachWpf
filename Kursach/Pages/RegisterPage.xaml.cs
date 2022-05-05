@@ -1,5 +1,7 @@
 ﻿using Kursach.dto;
+using Kursach.ModalWindows;
 using Kursach.Services;
+using Kursach.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,25 +49,25 @@ namespace Kursach.Pages
             {
                 if (userPassw != repeatPassw)
                 {
-                    MessageBox.Show("Пароли должны совпадать");
+                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Пароли должны совпадать")).Show();
                     return;
                 }
                 if (!Regex.IsMatch(userEmail, validEmailPattern))
                 {
-                    MessageBox.Show("Email неккоректный");
+                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Email неккоректный")).Show();
                     return;
                 }
                 var res = await authService.Register(new RegisterDto { email = userEmail, name = username, password = userPassw, role = userRole == "Пользователь" ? "USER" : "AUTHOR" });
                 if (res.IsError)
                 {
-                    MessageBox.Show($"Произошла ошибка:{res.HttpError.message}");
+                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка",res.HttpError.message)).Show();
                     return;
                 }
                 authService.SetAuthorize(res.Data);
                 this.NavigationService.Navigate(new StartPage());
                 return;
             }
-            MessageBox.Show("Все поля должны быть заполнены");
+            ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Все поля должны быть заполнены")).Show();
         }
 
         private void toLoginButton_Click(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@
             <Setter Property="Foreground" Value="Black"></Setter>
         </Style>
         </UserControl.Resources>
-    <Border CornerRadius="20" BorderThickness="4" Background="Blue" Margin="20">
-        <Button Background="Blue"  Width="150" Height="150" Click="Button_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">+</Button>
+    <Border CornerRadius="20" BorderThickness="0.1" Background="Blue" Margin="20">
+        <Button BorderThickness="0" Background="Blue"  Width="150" Height="150" Click="Button_Click" >+</Button>
     </Border>
 </UserControl>

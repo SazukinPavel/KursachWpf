@@ -1,16 +1,21 @@
 ﻿using Kursach.http;
 using Kursach.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Kursach.Services
 {
-    internal class OwnCoursesService
+    internal class CourseService
     {
-        private MyHttpClient myHttpClient;
 
-        public OwnCoursesService()
+        MyHttpClient myHttpClient;
+
+        public CourseService()
         {
-            myHttpClient = new MyHttpClient("own-courses/");
+            myHttpClient = new MyHttpClient("courses/");
         }
 
         public async Task<HttpData<Course[]>> GetCourses()

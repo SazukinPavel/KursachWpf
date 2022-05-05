@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Main"  WindowState="Maximized" WindowStyle="SingleBorderWindow">
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" Name="frame" Source="UserPage.xaml"></Frame>
+        <Frame NavigationUIVisibility="Hidden" Name="frame" Source="Pages/StartPage.xaml"></Frame>
     </Grid>
 </Window>
