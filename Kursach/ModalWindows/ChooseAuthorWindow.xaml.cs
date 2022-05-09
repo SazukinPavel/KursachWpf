@@ -44,7 +44,7 @@ namespace Kursach.ModalWindows
         {
             if (authors.SelectedItem == null)
             {
-                ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Выберите автора!")).Show();
+                ModalWindowFactory.CreateMessageWindow("Выберите автора!").Show();
                 return;
             }
             ResultAuthor = authors.SelectedItem as Author;

@@ -42,14 +42,14 @@ namespace Kursach.Pages
                 var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail, password = userPassw });
                 if (res.IsError)
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", res.HttpError.message)).Show();
+                    ModalWindowFactory.CreateMessageWindow("Произошла ошибка", res.HttpError.message).Show();
                     return;
                 }
                 authService.SetAuthorize(res.Data);
                 this.NavigationService.Navigate(new StartPage());
                 return;
             }
-            ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Все поля должны быть заполнены")).Show();
+            ModalWindowFactory.CreateMessageWindow("Все поля должны быть заполнены").Show();
         }
 
         private void onRegisterButton_Click(object sender, RoutedEventArgs e)

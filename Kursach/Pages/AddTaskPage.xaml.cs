@@ -48,16 +48,16 @@ namespace Kursach.Pages
                 var response = await TaskService.AddTask(new AddTaskDto { description = descVallue, title = titleVallue,courseId=course.id });
                 if (response.IsSucessfull)
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Задача успешна добавлена")).Show();
+                    ModalWindowFactory.CreateMessageWindow("Задача успешна добавлена").Show();
                 }
                 else
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", response.HttpError.message)).Show();
+                    ModalWindowFactory.CreateMessageWindow("Произошла ошибка", response.HttpError.message).Show();
                 }
             }
             else
             {
-                ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Заполните все поля!")).Show();
+                ModalWindowFactory.CreateMessageWindow("Заполните все поля!").Show();
             }
         }
     }

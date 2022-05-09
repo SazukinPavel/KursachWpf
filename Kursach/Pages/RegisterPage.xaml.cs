@@ -49,25 +49,25 @@ namespace Kursach.Pages
             {
                 if (userPassw != repeatPassw)
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Пароли должны совпадать")).Show();
+                    ModalWindowFactory.CreateMessageWindow("Пароли должны совпадать").Show();
                     return;
                 }
                 if (!Regex.IsMatch(userEmail, validEmailPattern))
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Email неккоректный")).Show();
+                    ModalWindowFactory.CreateMessageWindow("Email неккоректный").Show();
                     return;
                 }
                 var res = await authService.Register(new RegisterDto { email = userEmail, name = username, password = userPassw, role = userRole == "Пользователь" ? "USER" : "AUTHOR" });
                 if (res.IsError)
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка",res.HttpError.message)).Show();
+                    ModalWindowFactory.CreateMessageWindow("Произошла ошибка",res.HttpError.message).Show();
                     return;
                 }
                 authService.SetAuthorize(res.Data);
                 this.NavigationService.Navigate(new StartPage());
                 return;
             }
-            ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Все поля должны быть заполнены")).Show();
+            ModalWindowFactory.CreateMessageWindow("Все поля должны быть заполнены").Show();
         }
 
         private void toLoginButton_Click(object sender, RoutedEventArgs e)

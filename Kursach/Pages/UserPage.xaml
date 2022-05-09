@@ -63,6 +63,24 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Ellipse Height="10" Width="10" Fill="Black" />
+                            <TextBlock Margin="3">Ответы на решения</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <ScrollViewer>
+                            <UniformGrid Columns="2"  Name="reviews">
+                            </UniformGrid>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>

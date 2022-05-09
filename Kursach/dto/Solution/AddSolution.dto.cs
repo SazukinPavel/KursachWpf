@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Kursach.dto
+﻿namespace Kursach.dto
 {
-    internal class AddSolution
+    public class AddSolutionDto
     {
+        public string taskId { get; set; }
+        public string text { get; set; }
+
     }
 }

@@ -91,12 +91,12 @@ namespace Kursach.Pages
 
         private async void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if((bool)ModalWindowFactory.CreateConfirmWindow(new ConfirmWindowProps("Вы точно хотите удалить жтот курс?")).ShowDialog())
+            if((bool)ModalWindowFactory.CreateConfirmWindow("Вы точно хотите удалить жтот курс?").ShowDialog())
             {
                 var response= await OwnCoursesService.DeleteCourse(Course.id);
                 CheckErrorOrExecuteAction(response, () =>
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Курс был удалён")).Show();
+                    ModalWindowFactory.CreateMessageWindow("Курс был удалён").Show();
                     this.NavigationService.Navigate(new AuthorPage());
                 });
             }
@@ -106,7 +106,7 @@ namespace Kursach.Pages
         {
             if (httpData.IsError)
             {
-                ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", httpData.HttpError.message)).Show();
+                ModalWindowFactory.CreateMessageWindow("Произошла ошибка", httpData.HttpError.message).Show();
                 return;
             }
             action();

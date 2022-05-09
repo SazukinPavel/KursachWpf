@@ -1,4 +1,5 @@
 ﻿using Kursach.Controls;
+using Kursach.ModalWindows;
 using Kursach.Models;
 using Kursach.Services;
 using Kursach.Types;
@@ -17,9 +18,12 @@ namespace Kursach.Pages
     {
 
         private List<Course> CoursesList { get; set; }
-        private List<Task> TasksList { get; set; }
+        private List<UserTask> TasksList { get; set; }
+        private List<Review> ReviewsList { get; set; }
+
         SubscriptionService subscriptionService;
         TaskService taskService;
+        ReviewService reviewService;
         public UserPage()
         {
             ShowsNavigationUI = false;
@@ -27,6 +31,7 @@ namespace Kursach.Pages
             name.Text = (App.Current as App).User.name;
             subscriptionService = new SubscriptionService();
             taskService = new TaskService();
+            reviewService= new ReviewService();
         }
 
         async System.Threading.Tasks.Task FetchCourses()
@@ -34,14 +39,23 @@ namespace Kursach.Pages
             CoursesList = (await subscriptionService.GetCourses())?.Data?.ToList();
         }
 
+        async System.Threading.Tasks.Task FetchTasks()
+        {
+            TasksList = (await taskService.GetUserTasks())?.Data?.ToList();
+        }
+        async System.Threading.Tasks.Task FetchReviews()
+        {
+            ReviewsList = (await reviewService.GetReviews())?.Data?.ToList();
+        }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            if (CoursesList == null && TasksList==null)
+            if (CoursesList == null && TasksList == null && ReviewsList==null)
             {
                 RenderCoursePanel();
                 RenderTaskPanel();
+                RenderReviewPanel();
             }
         }
 
@@ -55,6 +69,31 @@ namespace Kursach.Pages
             courses.Children.Add(new PlusCard(GoToAllCourses));
         }
 
+        async void RenderTaskPanel()
+        {
+            await FetchTasks();
+            tasks.Children.Clear();
+            foreach (var task in TasksList)
+            {
+                tasks.Children.Add(new TaskCard(new TaskCardProps
+                {
+                    Task = task,
+                    buttonClick = task.isHaveSolution ? OpenEditSolution : OpenAddSolution,
+                    ButtonMessage = task.isHaveSolution ? "Изменить решение" : "Добавить решение"
+                }));
+            }
+        }
+
+        async void RenderReviewPanel()
+        {
+            await FetchReviews();
+            reviews.Children.Clear();
+            foreach (var review in ReviewsList)
+            {
+                reviews.Children.Add(new ReviewCard(new Types.Props.ReviewCardProps { review=review,ButtonMessage="Прочитать",buttonClick=(review)=>OpenReview(review)}));
+            }
+        }
+
         public void GoToCoursePage(Course course)
         {
             this.NavigationService.Navigate(new CoursePage(course, new UserPage()));
@@ -64,19 +103,31 @@ namespace Kursach.Pages
         {
             this.NavigationService.Navigate(new AllCoursesPage());
         }
-
-        async void RenderTaskPanel()
+        void OpenAddSolution(Task task)
         {
-            await FetchTasks();
-            tasks.Children.Clear();
-            foreach (var task in TasksList)
-            {
-                tasks.Children.Add(new TaskCard(new TaskCardProps { Task = task, buttonClick = (t) => { }, ButtonMessage = "Изменить" }));
-            }
+            var window = ModalWindowFactory.CreateAddSolutionWindow(task);
+            window.ShowDialog();
+            bool needRefetch = (bool)window.DialogResult;
+            if (needRefetch)
+                RenderTaskPanel();
         }
-        async System.Threading.Tasks.Task FetchTasks()
+
+        void OpenEditSolution(Task task)
         {
-            TasksList = (await taskService.GetUserTasks())?.Data?.ToList();
+            var window = ModalWindowFactory.CreateEditSolutionWindow(task);
+            window.ShowDialog();
+            bool needRefetch = (bool)window.DialogResult;
+            if (needRefetch)
+                RenderTaskPanel();
+        }
+
+        void OpenReview(Review review)
+        {
+            var window = ModalWindowFactory.CreateReadReviewWindow(review);
+            window.ShowDialog();
+            bool needRefetch = (bool)window.DialogResult;
+            if (needRefetch)
+                RenderReviewPanel();
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)

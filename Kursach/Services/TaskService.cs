@@ -18,9 +18,14 @@ namespace Kursach.Services
             return await myHttpClient.Post<Models.Task, AddTaskDto>("", addTaskDto);
         }
 
-        public async Task<HttpData<Models.Task[]>> GetUserTasks()
+        public async Task<HttpData<UserTask[]>> GetUserTasks()
         {
-            return await myHttpClient.Get<Models.Task[]>("");
+            return await myHttpClient.Get<UserTask[]>("");
+        }
+
+        public async Task<HttpData<AuthorTask[]>> GetAuthorTasks()
+        {
+            return await myHttpClient.Get<AuthorTask[]>("");
         }
 
         public async Task<HttpData<Models.Task[]>> GetCourseTasks(string courseId)

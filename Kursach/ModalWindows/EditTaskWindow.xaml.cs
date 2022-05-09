@@ -34,14 +34,14 @@ namespace Kursach.ModalWindows
                 var response = await TaskService.UpdateTask(new dto.UpdateTaskDto { description = description.Text, title = title.Text, taskId = Task.id });
                 if(response.IsError)
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", response.HttpError.message)).Show();
+                    ModalWindowFactory.CreateMessageWindow("Произошла ошибка", response.HttpError.message).Show();
                 }
             }
         }
 
         private async void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var modal = ModalWindowFactory.CreateConfirmWindow(new ConfirmWindowProps("Вы точно хотите удалить эту задачу?"));
+            var modal = ModalWindowFactory.CreateConfirmWindow("Вы точно хотите удалить эту задачу?");
             modal.ShowDialog();
             if ((bool)modal.DialogResult)
             {
@@ -49,11 +49,11 @@ namespace Kursach.ModalWindows
                 if (response.IsSucessfull)
                 {
                     DialogResult = true;
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Задача успешна удалена")).Show();
+                    ModalWindowFactory.CreateMessageWindow("Задача успешна удалена").Show();
                 }
                 else
                 {
-                    ModalWindowFactory.CreateMessageWindow(new MessageWindowProps("Произошла ошибка", response.HttpError.message)).Show();
+                    ModalWindowFactory.CreateMessageWindow("Произошла ошибка", response.HttpError.message).Show();
                 }
             }
         }
