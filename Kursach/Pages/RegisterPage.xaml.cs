@@ -57,13 +57,12 @@ namespace Kursach.Pages
                     ModalWindowFactory.CreateMessageWindow("Email неккоректный").Show();
                     return;
                 }
-                var res = await authService.Register(new RegisterDto { email = userEmail, name = username, password = userPassw, role = userRole == "Пользователь" ? "USER" : "AUTHOR" });
+                var res = await authService.Register(new RegisterDto { email = userEmail, name = username.Trim(), password = userPassw, role = userRole == "Пользователь" ? "USER" : "AUTHOR" });
                 if (res.IsError)
                 {
                     ModalWindowFactory.CreateMessageWindow("Произошла ошибка",res.HttpError.message).Show();
                     return;
                 }
-                authService.SetAuthorize(res.Data);
                 this.NavigationService.Navigate(new StartPage());
                 return;
             }

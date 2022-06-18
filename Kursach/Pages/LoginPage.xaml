@@ -12,6 +12,7 @@
             <Setter Property="Padding" Value="0 10 0 10"></Setter>
             <Setter Property="FontSize" Value="35"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="Width" Value="350"></Setter>
         </Style>
         <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignCharacterCounterTextBlock}">
             <Setter Property="Margin" Value="0 20 0 20"></Setter>
@@ -25,6 +26,7 @@
             <Setter Property="Margin" Value="10"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Height" Value="80"></Setter>
+            
         </Style>
     </Page.Resources>
     <Grid>
@@ -36,7 +38,7 @@
                     <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Margin="0 0 30 0">Имя или email:</TextBlock>
-                <TextBox  MaxLength="30" Grid.Column="1" x:Name="nameOrEmail"></TextBox>
+                <TextBox Grid.Column="1" x:Name="nameOrEmail" Cursor="Arrow"></TextBox>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>

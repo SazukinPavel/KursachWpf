@@ -4,5 +4,6 @@
     {
         public string solutionId { get; set; }
         public string text { get; set; }
+        public bool isRight { get; set; }
     }
 }

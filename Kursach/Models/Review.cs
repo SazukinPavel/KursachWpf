@@ -6,5 +6,6 @@
         public string text { get; set; }
         public Solution solution { get; set; }
         public User owner { get; set; }
+        public bool isRight { get; set; }
     }
 }

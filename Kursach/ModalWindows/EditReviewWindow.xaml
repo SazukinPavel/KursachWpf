@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursach.ModalWindows"
         mc:Ignorable="d"
-        Title="EditReviewWindow" SizeToContent="WidthAndHeight" MaxWidth="600" MaxHeight="600">
+        Title="EditReviewWindow" SizeToContent="WidthAndHeight" MaxWidth="600" MaxHeight="600" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="reviewStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}">
             <Setter Property="Foreground" Value="Black"></Setter>

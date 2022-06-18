@@ -23,9 +23,9 @@ namespace Kursach.Services
             return await myHttpClient.Get<Author>(id);
         }
 
-        public async Task<HttpData<bool>> UpdateAuthorBio(string bio)
+        public async Task<HttpData<Author>> UpdateAuthorBio(string bio)
         {
-            return await myHttpClient.Put<bool, UpdateAuthorDto>("",new UpdateAuthorDto { bio=bio});
+            return await myHttpClient.Put<Author, UpdateAuthorDto>("",new UpdateAuthorDto { bio=bio});
         }
 
     }

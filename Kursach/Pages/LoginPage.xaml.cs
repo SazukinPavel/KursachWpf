@@ -39,7 +39,7 @@ namespace Kursach.Pages
             string userPassw = password.GetPassword();
             if (!string.IsNullOrEmpty(usernameOrEmail) && !string.IsNullOrEmpty(userPassw))
             {
-                var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail, password = userPassw });
+                var res = await authService.Login(new LoginDto { emailOrName = usernameOrEmail.Trim(), password = userPassw });
                 if (res.IsError)
                 {
                     ModalWindowFactory.CreateMessageWindow("Произошла ошибка", res.HttpError.message).Show();

@@ -48,6 +48,8 @@ namespace Kursach.Pages
                 var response = await TaskService.AddTask(new AddTaskDto { description = descVallue, title = titleVallue,courseId=course.id });
                 if (response.IsSucessfull)
                 {
+                    title.Clear();
+                    description.Clear();
                     ModalWindowFactory.CreateMessageWindow("Задача успешна добавлена").Show();
                 }
                 else

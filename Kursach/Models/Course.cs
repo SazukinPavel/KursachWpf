@@ -7,7 +7,7 @@ namespace Kursach.Models
         public string id { get; init; }
         public string name { get; init; }
         public string description { get; init; }
-        public List<User>? authors { get; init; }
+        public List<User>? authors { get; set; }
         public override string ToString()
         {
             return name;

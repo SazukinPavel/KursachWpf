@@ -1,6 +1,7 @@
 ﻿using Kursach.Models;
 using Kursach.Types.Props;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Kursach.Controls
 {
@@ -21,6 +22,7 @@ namespace Kursach.Controls
         void SetProps(ReviewCardProps reviewCardProps)
         {
             Review = reviewCardProps.review;
+            border.BorderBrush = Review.isRight ? Brushes.Green:Brushes.Red;
             button.Content = reviewCardProps.ButtonMessage;
             button.Click += (sender,e)=>reviewCardProps.buttonClick(Review);
         }

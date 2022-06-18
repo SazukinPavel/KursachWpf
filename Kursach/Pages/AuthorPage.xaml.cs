@@ -28,7 +28,6 @@ namespace Kursach.Pages
         {
             ShowsNavigationUI = false;
             InitializeComponent();
-            name.Text = (App.Current as App).User.name;
             ownCoursesService = new OwnCourseService();
             taskService = new TaskService();
             solutionService=new SolutionService();
@@ -131,6 +130,11 @@ namespace Kursach.Pages
         void addTaskButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new AddTaskPage(CoursesList));
+        }
+
+        private void toMyCabinet_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new MyProfile());
         }
     }
 }

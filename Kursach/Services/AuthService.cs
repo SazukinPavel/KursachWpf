@@ -14,9 +14,9 @@ namespace Kursach.Services
             myHttpClient = new MyHttpClient("auth/");
         }
 
-        public async Task<HttpData<AuthResponseDto>> Register(RegisterDto registerDto)
+        public async Task<HttpData<User>> Register(RegisterDto registerDto)
         {
-            return await myHttpClient.Post<AuthResponseDto, RegisterDto>("register", registerDto);
+            return await myHttpClient.Post<User, RegisterDto>("register", registerDto);
         }
 
         public async Task<HttpData<AuthResponseDto>> Login(LoginDto loginDto)

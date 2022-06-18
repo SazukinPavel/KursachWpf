@@ -32,7 +32,7 @@ namespace Kursach.ModalWindows
         {
             if (!string.IsNullOrEmpty(review.Text))
             {
-                var response= await reviewService.AddReview(new AddReviewDto { solutionId = Solution.id, text = review.Text });
+                var response= await reviewService.AddReview(new AddReviewDto { solutionId = Solution.id, text = review.Text,isRight=isRight.IsChecked.Value});
                 if (response.IsSucessfull)
                 {
                     DialogResult = true;

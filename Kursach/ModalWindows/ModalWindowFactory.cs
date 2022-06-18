@@ -1,4 +1,5 @@
 ﻿using Kursach.Models;
+using Kursach.Services;
 using Kursach.Types;
 using System.Collections.Generic;
 
@@ -62,6 +63,15 @@ namespace Kursach.ModalWindows
         public static EditReviewWindow CreateEditSolutionWindow(AuthorSolution solution)
         {
             return new EditReviewWindow(solution);
+        }
+
+        public static ChangePasswordWindow CreateChangePasswordWindow(MyProfileService myProfileService)
+        {
+            return new ChangePasswordWindow(myProfileService);
+        }
+        public static UpdateAuthorBioWindow CreateUpdateBioWindow()
+        {
+            return new UpdateAuthorBioWindow();
         }
     }
 }

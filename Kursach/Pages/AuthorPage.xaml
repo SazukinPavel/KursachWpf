@@ -22,7 +22,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid>
-            <TextBlock FontSize="40" HorizontalAlignment="Left" x:Name="name"></TextBlock>
+            <Button  Margin="10" HorizontalAlignment="Left" Name="toMyCabinet" Click="toMyCabinet_Click" Cursor="Hand">Мой профиль</Button>
             <Button Margin="10" HorizontalAlignment="Right" Click="exitButton_Click">Выйти</Button>
         </Grid>
         <TabControl Grid.Row="1">

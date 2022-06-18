@@ -49,6 +49,7 @@ namespace Kursach.Pages
             bio.Text = Author.bio;
             foreach (var item in Author.Courses)
             {
+                item.authors = new List<User> { Author };
                 courses.Children.Add(new CourseCard(item, onOpenCourse));
             }
         }

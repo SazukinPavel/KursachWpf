@@ -28,7 +28,6 @@ namespace Kursach.Pages
         {
             ShowsNavigationUI = false;
             InitializeComponent();
-            name.Text = (App.Current as App).User.name;
             subscriptionService = new SubscriptionService();
             taskService = new TaskService();
             reviewService= new ReviewService();
@@ -134,6 +133,11 @@ namespace Kursach.Pages
         {
             AuthService.ResetToken();
             this.NavigationService.Navigate(new StartPage());
+        }
+
+        private void toMyCabinet_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new MyProfile());
         }
     }
 }

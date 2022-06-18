@@ -46,6 +46,8 @@ namespace Kursach.Pages
                 var response = await OwnCoursesService.AddCourse(new AddCourseDto { description = descripptionVallue, name = nameVallue });
                 if (response.IsSucessfull)
                 {
+                    name.Clear();
+                    description.Clear();
                     ModalWindowFactory.CreateMessageWindow("Курс был добавлен").Show();
                 }
                 else
@@ -53,7 +55,8 @@ namespace Kursach.Pages
                     ModalWindowFactory.CreateMessageWindow("Произошла ошибка",response.HttpError.message).Show();
                 }
             }
-            ModalWindowFactory.CreateMessageWindow("Заполните все поля").Show();
+            else
+                ModalWindowFactory.CreateMessageWindow("Заполните все поля").Show();
         }
     }
 }

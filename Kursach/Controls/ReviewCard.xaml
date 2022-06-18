@@ -14,14 +14,15 @@
             <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="Padding" Value="10"></Setter>
         </Style>
-        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatAccentBgButton}">
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
             <Setter Property="FontSize" Value="35"></Setter>
             <Setter Property="Margin" Value="25 0 25 20"></Setter>
             <Setter Property="Padding" Value="5"></Setter>
             <Setter Property="Height" Value="60"></Setter>
+            <Setter Property="Background" Value="Blue"></Setter>
         </Style>
     </UserControl.Resources>
-    <Border Height="300" BorderBrush="Blue" BorderThickness="5" CornerRadius="20" Background="White" Margin="20">
+    <Border Name="border" Height="300" BorderBrush="Blue" BorderThickness="5" CornerRadius="20" Background="White" Margin="20">
         <StackPanel>
             <TextBlock Name="taskName" HorizontalAlignment="Center"></TextBlock>
             <TextBlock Name="course" HorizontalAlignment="Left"></TextBlock>
